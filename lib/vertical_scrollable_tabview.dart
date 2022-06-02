@@ -168,21 +168,37 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   void animateAndScrollTo(int index) async {
     // Scroll 到 index 並使用 begin 的模式，結束後，把 pauseRectGetterIndex 設為 false 暫停執行 ScrollNotification
     pauseRectGetterIndex = true;
-    widget._tabController.animateTo(index);
+    widget._tabController.animateTo(
+      index,
+      duration: Duration(milliseconds: 0),
+      curve: Curves.linear,
+    );
     switch (widget._verticalScrollPosition) {
       case VerticalScrollPosition.begin:
         scrollController
-            .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
+            .scrollToIndex(
+              index,
+              preferPosition: AutoScrollPosition.begin,
+              duration: Duration(milliseconds: 0),
+            )
             .then((value) => pauseRectGetterIndex = false);
         break;
       case VerticalScrollPosition.middle:
         scrollController
-            .scrollToIndex(index, preferPosition: AutoScrollPosition.middle)
+            .scrollToIndex(
+              index,
+              preferPosition: AutoScrollPosition.middle,
+              duration: Duration(milliseconds: 0),
+            )
             .then((value) => pauseRectGetterIndex = false);
         break;
       case VerticalScrollPosition.end:
         scrollController
-            .scrollToIndex(index, preferPosition: AutoScrollPosition.end)
+            .scrollToIndex(
+              index,
+              preferPosition: AutoScrollPosition.end,
+              duration: Duration(milliseconds: 0),
+            )
             .then((value) => pauseRectGetterIndex = false);
         break;
     }
