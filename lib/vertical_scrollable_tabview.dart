@@ -191,7 +191,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     widget._tabController.animateTo(
       index,
       duration: Duration(milliseconds: durationMillis),
-      curve: Curves.linear,
+      curve: Curves.ease,
     );
 
     widget._changeItemSelected!(index);
@@ -226,7 +226,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         break;
     }
 
-    Future.delayed(Duration(milliseconds: durationMillis), () {
+    Future.delayed(Duration(milliseconds: durationMillis + 200), () {
       setState(() {
         isTabChange = false;
       });
