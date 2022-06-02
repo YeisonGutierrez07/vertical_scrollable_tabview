@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vertical_scrollable_tabview/vertical_scrollable_tabview.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('vertical_scrollable_tabview');

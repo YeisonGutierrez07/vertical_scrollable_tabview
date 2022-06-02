@@ -28,6 +28,8 @@ class VerticalScrollableTabView extends StatefulWidget {
   /// 要求 List<dynamic> 的結構，List 裡面可以放自己建立的 Object
   final List<dynamic> _listItemData;
 
+  final ValueChanged<int>? _changeItemSelected;
+
   /// A callback that return an Object inside _listItemData and the index of ListView.Builder
   /// A callback 用來回傳一個 _listItemData 裡面的 Object 型態和 ListView.Builder 的 index
   final Widget Function(dynamic aaa, int index) _eachItemChild;
@@ -46,6 +48,7 @@ class VerticalScrollableTabView extends StatefulWidget {
   VerticalScrollableTabView({
     required TabController tabController,
     required List<dynamic> listItemData,
+    required ValueChanged<int>? changeItemSelected,
 
     /// TODO Horizontal ScrollDirection
     // required Axis scrollDirection,
@@ -55,6 +58,7 @@ class VerticalScrollableTabView extends StatefulWidget {
     required List<Widget> slivers,
   })  : _tabController = tabController,
         _listItemData = listItemData,
+        _changeItemSelected = changeItemSelected,
 
         ///TODO Horizontal ScrollDirection
         // _axisOrientation = scrollDirection,
@@ -170,25 +174,28 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     pauseRectGetterIndex = true;
     widget._tabController.animateTo(
       index,
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 1500),
       curve: Curves.linear,
     );
+
+    widget._changeItemSelected!(index);
+
     switch (widget._verticalScrollPosition) {
       case VerticalScrollPosition.begin:
         scrollController
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.begin,
-              duration: Duration(seconds: 2),
+              duration: Duration(milliseconds: 1500),
             )
-            .then((value) => pauseRectGetterIndex = false);
+            .then((value) => {pauseRectGetterIndex = false});
         break;
       case VerticalScrollPosition.middle:
         scrollController
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.middle,
-              duration: Duration(seconds: 2),
+              duration: Duration(milliseconds: 1500),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
@@ -197,7 +204,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.end,
-              duration: Duration(seconds: 2),
+              duration: Duration(milliseconds: 1500),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;

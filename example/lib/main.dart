@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage>
         tabController: tabController,
         listItemData: data,
         verticalScrollPosition: VerticalScrollPosition.begin,
+        changeItemSelected: (int index) {},
         eachItemChild: (object, index) =>
             CategorySection(category: object as Category),
         slivers: [
