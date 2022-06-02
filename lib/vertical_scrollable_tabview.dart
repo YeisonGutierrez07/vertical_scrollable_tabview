@@ -242,6 +242,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     //   }
     // }
     List<int> visibleItems = getVisibleItemsIndex();
+    widget._changeItemSelected!(visibleItems[0]);
     widget._tabController.animateTo(visibleItems[0]);
     return false;
   }
