@@ -181,7 +181,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
       distanceIndex = distanceIndex * -1;
     }
 
-    int durationMillis = distanceIndex * 100;
+    int durationMillis = distanceIndex * 300;
 
     setState(() {
       currentIndexCategory = index;
