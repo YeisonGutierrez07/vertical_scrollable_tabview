@@ -88,6 +88,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   Map<int, dynamic> itemsKeys = {};
 
   int currentIndexCategory = 0;
+  bool isTabChange = false;
 
   @override
   void initState() {
@@ -173,6 +174,10 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   /// This need to put inside TabBar onTap, but in this case we put inside tabBarListener
   void animateAndScrollTo(int index) async {
     // Scroll 到 index 並使用 begin 的模式，結束後，把 pauseRectGetterIndex 設為 false 暫停執行 ScrollNotification
+
+    setState(() {
+      isTabChange = true;
+    });
     pauseRectGetterIndex = true;
     widget._tabController.animateTo(
       index,
@@ -211,6 +216,12 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
             .then((value) => pauseRectGetterIndex = false);
         break;
     }
+
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      setState(() {
+        isTabChange = false;
+      });
+    });
   }
 
   /// onScrollNotification of NotificationListener
@@ -244,7 +255,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     //   }
     // }
     List<int> visibleItems = getVisibleItemsIndex();
-    if (currentIndexCategory != visibleItems[0]) {
+    if (currentIndexCategory != visibleItems[0] && !isTabChange) {
       widget._changeItemSelected!(visibleItems[0]);
       widget._tabController.animateTo(visibleItems[0]);
 
