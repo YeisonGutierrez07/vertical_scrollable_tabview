@@ -175,13 +175,22 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   void animateAndScrollTo(int index) async {
     // Scroll 到 index 並使用 begin 的模式，結束後，把 pauseRectGetterIndex 設為 false 暫停執行 ScrollNotification
 
+    int distanceIndex = (currentIndexCategory - index);
+
+    if (distanceIndex <= 0) {
+      distanceIndex = distanceIndex * -1;
+    }
+
+    int durationMillis = distanceIndex * 100;
+
     setState(() {
+      currentIndexCategory = index;
       isTabChange = true;
     });
     pauseRectGetterIndex = true;
     widget._tabController.animateTo(
       index,
-      duration: Duration(milliseconds: 1500),
+      duration: Duration(milliseconds: durationMillis),
       curve: Curves.linear,
     );
 
@@ -193,7 +202,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.begin,
-              duration: Duration(milliseconds: 1500),
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => {pauseRectGetterIndex = false});
         break;
@@ -202,7 +211,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.middle,
-              duration: Duration(milliseconds: 1500),
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
@@ -211,13 +220,13 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
             .scrollToIndex(
               index,
               preferPosition: AutoScrollPosition.end,
-              duration: Duration(milliseconds: 1500),
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
     }
 
-    Future.delayed(const Duration(milliseconds: 1500), () {
+    Future.delayed(Duration(milliseconds: durationMillis), () {
       setState(() {
         isTabChange = false;
       });
