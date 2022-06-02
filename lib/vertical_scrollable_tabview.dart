@@ -87,6 +87,8 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   /// 用來儲存 items 的 Rect 的 Map
   Map<int, dynamic> itemsKeys = {};
 
+  int currentIndexCategory = 0;
+
   @override
   void initState() {
     widget._tabController.addListener(() {
@@ -242,8 +244,14 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     //   }
     // }
     List<int> visibleItems = getVisibleItemsIndex();
-    widget._changeItemSelected!(visibleItems[0]);
-    widget._tabController.animateTo(visibleItems[0]);
+    if (currentIndexCategory != visibleItems[0]) {
+      widget._changeItemSelected!(visibleItems[0]);
+      widget._tabController.animateTo(visibleItems[0]);
+
+      setState(() {
+        currentIndexCategory = visibleItems[0];
+      });
+    }
     return false;
   }
 
