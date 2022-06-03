@@ -181,7 +181,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
       distanceIndex = distanceIndex * -1;
     }
 
-    int durationMillis = distanceIndex * 100;
+    int durationMillis = distanceIndex * 200;
 
     setState(() {
       currentIndexCategory = index;
@@ -224,7 +224,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         break;
     }
 
-    Future.delayed(Duration(milliseconds: durationMillis + 100), () {
+    Future.delayed(Duration(milliseconds: durationMillis + 200), () {
       setState(() {
         isTabChange = false;
       });
