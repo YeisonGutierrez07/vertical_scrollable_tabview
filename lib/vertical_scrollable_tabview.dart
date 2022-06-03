@@ -181,7 +181,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
       distanceIndex = distanceIndex * -1;
     }
 
-    int durationMillis = distanceIndex * 300;
+    int durationMillis = distanceIndex * 100;
 
     setState(() {
       currentIndexCategory = index;
@@ -199,6 +199,8 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
+              preferPosition: AutoScrollPosition.begin,
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => {pauseRectGetterIndex = false});
         break;
@@ -206,6 +208,8 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
+              preferPosition: AutoScrollPosition.middle,
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
@@ -213,12 +217,14 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
+              preferPosition: AutoScrollPosition.end,
+              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
     }
 
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(Duration(milliseconds: durationMillis + 100), () {
       setState(() {
         isTabChange = false;
       });
