@@ -224,7 +224,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         break;
     }
 
-    Future.delayed(Duration(milliseconds: durationMillis + 200), () {
+    Future.delayed(Duration(milliseconds: durationMillis + 400), () {
       setState(() {
         isTabChange = false;
       });
@@ -262,13 +262,15 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     //   }
     // }
     List<int> visibleItems = getVisibleItemsIndex();
-    if (currentIndexCategory != visibleItems[0] && !isTabChange) {
-      widget._changeItemSelected!(visibleItems[0]);
+    if (currentIndexCategory != visibleItems[0]) {
       widget._tabController.animateTo(visibleItems[0]);
 
       setState(() {
         currentIndexCategory = visibleItems[0];
       });
+    }
+    if (!isTabChange) {
+      widget._changeItemSelected!(visibleItems[0]);
     }
     return false;
   }
