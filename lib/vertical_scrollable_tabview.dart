@@ -190,8 +190,6 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     pauseRectGetterIndex = true;
     widget._tabController.animateTo(
       index,
-      duration: Duration(milliseconds: durationMillis),
-      curve: Curves.ease,
     );
 
     widget._changeItemSelected!(index);
@@ -201,8 +199,6 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
-              preferPosition: AutoScrollPosition.begin,
-              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => {pauseRectGetterIndex = false});
         break;
@@ -210,8 +206,6 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
-              preferPosition: AutoScrollPosition.middle,
-              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
@@ -219,14 +213,12 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
         scrollController
             .scrollToIndex(
               index,
-              preferPosition: AutoScrollPosition.end,
-              duration: Duration(milliseconds: durationMillis),
             )
             .then((value) => pauseRectGetterIndex = false);
         break;
     }
 
-    Future.delayed(Duration(milliseconds: durationMillis + 200), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       setState(() {
         isTabChange = false;
       });
