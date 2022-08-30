@@ -175,60 +175,62 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   void animateAndScrollTo(int index) async {
     // Scroll 到 index 並使用 begin 的模式，結束後，把 pauseRectGetterIndex 設為 false 暫停執行 ScrollNotification
 
-    int distanceIndex = (currentIndexCategory - index);
+    if (currentIndexCategory != index) {
+      int distanceIndex = (currentIndexCategory - index);
 
-    if (distanceIndex <= 0) {
-      distanceIndex = distanceIndex * -1;
-    }
+      if (distanceIndex <= 0) {
+        distanceIndex = distanceIndex * -1;
+      }
 
-    int durationMillis = distanceIndex * 200;
+      int durationMillis = distanceIndex * 200;
 
-    setState(() {
-      currentIndexCategory = index;
-      isTabChange = true;
-    });
-    pauseRectGetterIndex = true;
-    widget._tabController.animateTo(
-      index,
-    );
-
-    widget._changeItemSelected!(index);
-
-    switch (widget._verticalScrollPosition) {
-      case VerticalScrollPosition.begin:
-        scrollController
-            .scrollToIndex(
-              index,
-              preferPosition: AutoScrollPosition.begin,
-              duration: Duration(milliseconds: durationMillis),
-            )
-            .then((value) => {pauseRectGetterIndex = false});
-        break;
-      case VerticalScrollPosition.middle:
-        scrollController
-            .scrollToIndex(
-              index,
-              preferPosition: AutoScrollPosition.middle,
-              duration: Duration(milliseconds: durationMillis),
-            )
-            .then((value) => pauseRectGetterIndex = false);
-        break;
-      case VerticalScrollPosition.end:
-        scrollController
-            .scrollToIndex(
-              index,
-              preferPosition: AutoScrollPosition.end,
-              duration: Duration(milliseconds: durationMillis),
-            )
-            .then((value) => pauseRectGetterIndex = false);
-        break;
-    }
-
-    Future.delayed(Duration(milliseconds: durationMillis + 500), () {
       setState(() {
-        isTabChange = false;
+        currentIndexCategory = index;
+        isTabChange = true;
       });
-    });
+      pauseRectGetterIndex = true;
+      widget._tabController.animateTo(
+        index,
+      );
+
+      widget._changeItemSelected!(index);
+
+      switch (widget._verticalScrollPosition) {
+        case VerticalScrollPosition.begin:
+          scrollController
+              .scrollToIndex(
+                index,
+                preferPosition: AutoScrollPosition.begin,
+                duration: Duration(milliseconds: durationMillis),
+              )
+              .then((value) => {pauseRectGetterIndex = false});
+          break;
+        case VerticalScrollPosition.middle:
+          scrollController
+              .scrollToIndex(
+                index,
+                preferPosition: AutoScrollPosition.middle,
+                duration: Duration(milliseconds: durationMillis),
+              )
+              .then((value) => pauseRectGetterIndex = false);
+          break;
+        case VerticalScrollPosition.end:
+          scrollController
+              .scrollToIndex(
+                index,
+                preferPosition: AutoScrollPosition.end,
+                duration: Duration(milliseconds: durationMillis),
+              )
+              .then((value) => pauseRectGetterIndex = false);
+          break;
+      }
+
+      Future.delayed(Duration(milliseconds: durationMillis + 500), () {
+        setState(() {
+          isTabChange = false;
+        });
+      });
+    }
   }
 
   /// onScrollNotification of NotificationListener
@@ -262,10 +264,9 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
     //   }
     // }
     List<int> visibleItems = getVisibleItemsIndex();
-    if (!isTabChange) {
+    if (!isTabChange && currentIndexCategory != visibleItems[0]) {
       widget._changeItemSelected!(visibleItems[0]);
       widget._tabController.animateTo(visibleItems[0]);
-
       setState(() {
         currentIndexCategory = visibleItems[0];
       });
