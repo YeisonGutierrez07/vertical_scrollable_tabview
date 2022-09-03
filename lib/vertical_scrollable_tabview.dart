@@ -175,7 +175,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
   void animateAndScrollTo(int index) async {
     // Scroll 到 index 並使用 begin 的模式，結束後，把 pauseRectGetterIndex 設為 false 暫停執行 ScrollNotification
 
-    if (currentIndexCategory != index) {
+    //TODO: if (currentIndexCategory != index) {
       int distanceIndex = (currentIndexCategory - index);
 
       if (distanceIndex <= 0) {
@@ -230,7 +230,7 @@ class _VerticalScrollableTabViewState extends State<VerticalScrollableTabView>
           isTabChange = false;
         });
       });
-    }
+    // }
   }
 
   /// onScrollNotification of NotificationListener
